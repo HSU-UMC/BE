@@ -14,7 +14,7 @@ services:
       - db_data:/var/lib/mysql
 
   app:
-    image: your-dockerhub-repo/spring-app
+    image: ggamnunq/umc:backend
     container_name: spring-app
     restart: always
     depends_on:
@@ -27,7 +27,7 @@ services:
       - "8080:8080"
 
   nginx:
-    image: nginx:latest
+    image: ggamnunq/umc:nginx
     container_name: my-nginx
     restart: always
     ports:
