@@ -60,4 +60,4 @@ jobs:
         with:
           host: ${{ secrets.AWS_DEV_HOSTNAME }}
           username: ubuntu
-          key:
+          key: ${{ secrets.AWS_DEV_PRIVATE_KEY }}
