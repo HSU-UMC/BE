@@ -51,7 +51,6 @@ jobs:
 
       - name: Build & Push Nginx Docker Image
         run: |
-          cd ./nginx
           docker build -f ./Dockerfile -t ${{ secrets.DOCKER_REPOSITORY }}:nginx .
           docker push ${{ secrets.DOCKER_REPOSITORY }}:nginx
 
