@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${rds.hostname}:${rds.port}/${rds.db.name}
-    username: ${aws.db.username}
-    password: ${aws.db.password}
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${MYSQL_USER}
+    password: ${MYSQL_PASSWORD}
 
   jpa:
     hibernate:
@@ -20,17 +20,18 @@ spring:
     multipart:
       max-file-size: 20MB
       max-request-size: 20MB
-cloud:
-  aws:
-    s3:
-      bucket: umc-7th
-      path:
-        photo : photos
-    region:
-      static: ap-northeast-2
-    stack:
-      auto: false
-    credentials:
-      accessKey: ${aws.access.key.id}
-      secretKey: ${aws.secret.access.key}
 
+    # 잠시 보류
+#cloud:
+#  aws:
+#    s3:
+#      bucket: umc-7th
+#      path:
+#        photo: photos
+#    region:
+#      static: ap-northeast-2
+#    stack:
+#      auto: false
+#    credentials:
+#      accessKey: ${AWS_ACCESS_KEY_ID}
+#      secretKey: ${AWS_SECRET_ACCESS_KEY}
