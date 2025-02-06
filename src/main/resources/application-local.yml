@@ -22,17 +22,17 @@ spring:
       max-file-size: 10MB
       max-request-size: 10MB
 
-cloud:
-  aws:
-    s3:
-      bucket: umc-7th
-      path:
-        photo : photos
-    region:
-      static: ap-northeast-2
-    stack:
-      auto: false
-    cron: "0 * * * * *"
-    credentials:
-      accessKey: ${aws.access.key.id}
-      secretKey: ${aws.secret.access.key}
+#cloud:
+#  aws:
+#    s3:
+#      bucket: umc-7th
+#      path:
+#        photo : photos
+#    region:
+#      static: ap-northeast-2
+#    stack:
+#      auto: false
+#    cron: "0 * * * * *"
+#    credentials:
+#      accessKey: ${aws.access.key.id}
+#      secretKey: ${aws.secret.access.key}
