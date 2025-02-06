@@ -40,7 +40,7 @@ jobs:
           host: ${{ secrets.AWS_DEV_HOSTNAME }}
           username: ubuntu
           key: ${{ secrets.AWS_DEV_PRIVATE_KEY }}
-          source: "./src/main/resources/backend-config/docker-compose.yml, ./nginx/nginx.conf"
+          source: "./docker-compose.yml, ./nginx/nginx.conf"
           target: "/home/ubuntu/"
 
       - name: Build & Push Spring Boot Docker Image
