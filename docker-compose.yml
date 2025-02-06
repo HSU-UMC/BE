@@ -1,27 +1,20 @@
+version: '3.8'
+
 services:
   db:
     image: mysql:8.0
     container_name: my-mysql
     restart: always
-    env_file:
-      - /home/ubuntu/docker-env.env
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
       MYSQL_DATABASE: mydb
-      TZ: 'Asia/Seoul'
     ports:
       - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "--silent"]
-      interval: 30s
-      retries: 5
-      start_period: 5s
-      timeout: 10s
 
   app:
-    image: ggamnunq/umc:backend
+    image: your-dockerhub-repo/spring-app
     container_name: spring-app
     restart: always
     depends_on:
@@ -32,15 +25,9 @@ services:
       SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
     ports:
       - "8080:8080"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
-      interval: 30s
-      retries: 5
-      start_period: 10s
-      timeout: 10s
 
   nginx:
-    image: ggamnunq/umc:nginx
+    image: nginx:latest
     container_name: my-nginx
     restart: always
     ports:
