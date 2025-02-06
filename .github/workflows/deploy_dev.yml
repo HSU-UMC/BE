@@ -76,4 +76,5 @@ jobs:
             docker image prune -af
             
             # 새로운 컨테이너 실행
+            cd /home/ubuntu/app
             docker-compose up -d
