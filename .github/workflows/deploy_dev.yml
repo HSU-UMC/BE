@@ -52,7 +52,7 @@ jobs:
       - name: Build & Push Nginx Docker Image
         run: |
           cd ./nginx
-          docker build -t ${{ secrets.DOCKER_REPOSITORY }}:nginx .
+          docker build -f Dockerfile -t ${{ secrets.DOCKER_REPOSITORY }}:nginx .
           docker push ${{ secrets.DOCKER_REPOSITORY }}:nginx
 
       - name: Deploy to EC2
