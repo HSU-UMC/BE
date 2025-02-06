@@ -6,7 +6,7 @@ services:
     container_name: my-mysql
     restart: always
     env_file:
-      - ~/docker-env.env
+      - /home/ubuntu/docker-env.env
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: mydb
