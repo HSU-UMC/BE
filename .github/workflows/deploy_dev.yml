@@ -34,16 +34,22 @@ jobs:
       - name: Copy JAR file
         run: cp ./build/libs/*.jar ./deploy/
 
-      # EC2로 프로젝트 파일을 복사하는 부분
-      - name: Copy project files to EC2
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Get changed files
+        id: changed_files
+        run: |
+          git diff --name-only ${{ github.event.before }} ${{ github.sha }} > changed_files.txt
+
+      - name: Copy changed files to EC2
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.AWS_DEV_HOSTNAME }}
           username: ubuntu
           key: ${{ secrets.AWS_DEV_PRIVATE_KEY }}
-          source: "./, !./.git, !./.github, !./.gitignore"  # Git 폴더를 제외한 모든 파일 복사
-          target: "/home/ubuntu/app"  # EC2의 원하는 디렉토리로 복사
-
+          source: "$(cat changed_files.txt | tr '\n' ' ')"  # 변경된 파일 목록을 source로 사용
+          target: "/home/ubuntu/app"
       - name: Build & Push Spring Boot Docker Image
         run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
