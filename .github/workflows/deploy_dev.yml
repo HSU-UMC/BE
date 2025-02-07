@@ -70,11 +70,13 @@ jobs:
 
             # nginx.conf 적용
             sudo cp /home/ubuntu/app/nginx/nginx.conf /etc/nginx/nginx.conf
-          
+            
             # 기존 컨테이너 강제 종료 및 정리
             docker-compose down -v --remove-orphans
             docker rm -f my-mysql || true
+            docker rm -f spring-app || true
+            docker rm -f my-nginx || true
             docker image prune -af
-          
+            
             # 새로운 컨테이너 실행
             docker-compose up -d
