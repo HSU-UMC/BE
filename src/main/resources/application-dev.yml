@@ -29,17 +29,17 @@ server:
   port: 8080
   address: 0.0.0.0
 
-    # 잠시 보류
-#cloud:
-#  aws:
-#    s3:
-#      bucket: umc-7th
-#      path:
-#        photo: photos
-#    region:
-#      static: ap-northeast-2
-#    stack:
-#      auto: false
-#    credentials:
-#      accessKey: ${AWS_ACCESS_KEY_ID}
-#      secretKey: ${AWS_SECRET_ACCESS_KEY}
+     잠시 보류
+cloud:
+  aws:
+    s3:
+      bucket: umc-server
+      path:
+        photo: photos
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+    credentials:
+      accessKey: ${AWS_ACCESS_KEY}
+      secretKey: ${AWS_SECRET_ACCESS_KEY}
