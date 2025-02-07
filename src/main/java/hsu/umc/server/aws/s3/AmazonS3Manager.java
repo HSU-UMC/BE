@@ -27,7 +27,7 @@ public class AmazonS3Manager {
         return amazonS3.getUrl(amazonConfig.getBucket(),keyName).toString();
     }
     public void deleteFile(String photoUrl){
-        String s3Key = photoUrl.replace("https://umc-7th.s3.ap-northeast-2.amazonaws.com/", "");
+        String s3Key = photoUrl.replace("https://umc-server.s3.ap-northeast-2.amazonaws.com/", "");
         log.info("삭제할 s3 키 = {}", s3Key);
         try {
             amazonS3.deleteObject(new DeleteObjectRequest(amazonConfig.getBucket(), s3Key));
