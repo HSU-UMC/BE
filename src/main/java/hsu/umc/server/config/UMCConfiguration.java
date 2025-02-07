@@ -9,7 +9,7 @@ public class UMCConfiguration implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:5173","https://hansung-umc.netlify.app","https://www.hsuumc.site")
+                .allowedOrigins("http://localhost:5173","https://hansung-umc.netlify.app","https://hsuumc.site")
                 .allowedMethods("GET", "POST", "PATCH", "DELETE", "PUT")
                 .allowedHeaders("*")
                 .allowCredentials(true);
