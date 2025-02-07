@@ -37,10 +37,10 @@ jobs:
           docker build -t ${{ secrets.DOCKER_REPOSITORY }}:backend .
           docker push ${{ secrets.DOCKER_REPOSITORY }}:backend
 
-#      - name: Build & Push Nginx Docker Image
-#        run: |
-#          docker build -f ./Dockerfile -t ${{ secrets.DOCKER_REPOSITORY }}:nginx .
-#          docker push ${{ secrets.DOCKER_REPOSITORY }}:nginx
+      - name: Build & Push Nginx Docker Image
+        run: |
+          docker build -f ./Dockerfile -t ${{ secrets.DOCKER_REPOSITORY }}:nginx .
+          docker push ${{ secrets.DOCKER_REPOSITORY }}:nginx
 
       - name: Copy docker-compose.yml to EC2
         uses: appleboy/scp-action@master
