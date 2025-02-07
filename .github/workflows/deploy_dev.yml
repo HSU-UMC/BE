@@ -35,16 +35,14 @@ jobs:
       - name: Copy JAR file
         run: cp ./build/libs/*.jar ./deploy/
 
-      - name: Copy project files to EC2
+      - name: Check for changes and copy project files to EC2
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.AWS_DEV_HOSTNAME }}
           username: ubuntu
           key: ${{ secrets.AWS_DEV_PRIVATE_KEY }}
           source: |
-            ./deploy/
-            ./docker-compose.yml
-            ./nginx/nginx.conf
+            $(git diff --name-only HEAD~1)  # 마지막 커밋과 비교하여 변경된 파일만 가져오기
           target: "/home/ubuntu/app"
 
       - name: Build & Push Spring Boot Docker Image
