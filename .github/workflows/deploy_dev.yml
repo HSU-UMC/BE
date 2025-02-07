@@ -42,9 +42,9 @@ jobs:
 
       - name: Copy necessary files to EC2
         run: |
-          scp -i ${{ secrets.EC2_PRIVATE_KEY }} ./docker-compose.yml ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/app/
-          scp -i ${{ secrets.EC2_PRIVATE_KEY }} ./nginx/nginx.conf ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/app/nginx/
-          scp -i ${{ secrets.EC2_PRIVATE_KEY }} ./application-dev.yml ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/app/
+          scp -i ${{ secrets.AWS_DEV_PRIVATE_KEY }} ./docker-compose.yml ubuntu@${{ secrets.AWS_DEV_HOSTNAME }}:/home/ubuntu/app/
+          scp -i ${{ secrets.AWS_DEV_PRIVATE_KEY }} ./nginx/nginx.conf ubuntu@${{ secrets.AWS_DEV_HOSTNAME }}:/home/ubuntu/app/nginx/
+          scp -i ${{ secrets.AWS_DEV_PRIVATE_KEY }} ./application-dev.yml ubuntu@${{ secrets.AWS_DEV_HOSTNAME }}:/home/ubuntu/app/
 
       - name: Deploy to EC2
         uses: appleboy/ssh-action@master
