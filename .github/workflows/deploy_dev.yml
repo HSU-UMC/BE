@@ -64,7 +64,7 @@ jobs:
           host: ${{ secrets.AWS_DEV_HOSTNAME }}
           username: ubuntu
           key: ${{ secrets.AWS_DEV_PRIVATE_KEY }}
-          source: "application-dev.yml"
+          source: "src/main/resources/application-dev.yml"
           target: "/home/ubuntu/app/"
 
       - name: Deploy to EC2
