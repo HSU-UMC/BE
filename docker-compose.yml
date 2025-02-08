@@ -28,16 +28,16 @@ services:
     ports:
       - "8080:8080"
 
-#  nginx:
-#    image: ggamnunq/umc:nginx
-#    container_name: my-nginx
-#    restart: always
-#    ports:
-#      - "80:80"
-#    volumes:
-#      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-#    depends_on:
-#      - app
+  nginx:
+    image: ggamnunq/umc:nginx
+    container_name: my-nginx
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - app
 
 volumes:
   db_data:
