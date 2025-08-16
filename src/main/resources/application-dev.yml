@@ -1,40 +1,29 @@
 spring:
-#  config:
-#    import: "classpath:.env"  # .env 파일을 로드
-
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://db:3306/mydb
-    username: ${SPRING_DATASOURCE_USERNAME}
-    password: ${SPRING_DATASOURCE_PASSWORD}
+    url: jdbc:mysql://localhost:3307/mydb?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: umc_user
+    password: umc_password
 
   jpa:
-    database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
       ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    show_sql: true
 
   web:
     cors:
       allowed-origins: "http://localhost:5173"
-      allowed-methods: GET, POST, PATCH, DELETE, PUT
-      allowed-headers: "*"
-      allow-credentials: true
-
-  servlet:
-    multipart:
-      max-file-size: 20MB
-      max-request-size: 20MB
 
 cloud:
   aws:
-    s3:
-      bucket: umc-server
-      path:
-        photo: photos
-    region:
-      static: ap-northeast-2
-    stack:
-      auto: false
     credentials:
-      accessKey: ${AWS_ACCESS_KEY}
-      secretKey: ${AWS_SECRET_ACCESS_KEY}
+      accessKey: ${CLOUD_AWS_CREDENTIALS_ACCESSKEY}
+      secretKey: ${CLOUD_AWS_CREDENTIALS_SECRETKEY}
+    region:
+      static: ${CLOUD_AWS_REGION_STATIC}
+    s3:
+      bucket: ${CLOUD_AWS_S3_BUCKET}
+      path:
+        photo: ${CLOUD_AWS_S3_PATH_PHOTO}

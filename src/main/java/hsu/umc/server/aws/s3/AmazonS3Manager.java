@@ -23,11 +23,12 @@ public class AmazonS3Manager {
         System.out.println(keyName);
         ObjectMetadata metadata = new ObjectMetadata();
         metadata.setContentLength(file.getSize());
+        metadata.setContentType(file.getContentType()); // Content-Type 설정 추가
         amazonS3.putObject(new PutObjectRequest(amazonConfig.getBucket(), keyName, file.getInputStream(), metadata));
         return amazonS3.getUrl(amazonConfig.getBucket(),keyName).toString();
     }
     public void deleteFile(String photoUrl){
-        String s3Key = photoUrl.replace("https://umc-server.s3.ap-northeast-2.amazonaws.com/", "");
+        String s3Key = photoUrl.replace("https://hsu-umc-bucket.s3.ap-northeast-2.amazonaws.com/", "");
         log.info("삭제할 s3 키 = {}", s3Key);
         try {
             amazonS3.deleteObject(new DeleteObjectRequest(amazonConfig.getBucket(), s3Key));

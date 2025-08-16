@@ -1,8 +1,8 @@
 spring:
   profiles:
-    active: dev
-#    active: ${spring.profiles.active}
+#    active: local
+    active: ${spring.profiles.active}
 
 api:
   server:
-    url: https://umc.hsuumc.site
+    url: https://hsu-server.store
