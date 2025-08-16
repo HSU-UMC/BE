@@ -5,4 +5,4 @@ spring:
 
 api:
   server:
-    url: https://umc.hsuumc.site
+    url: https://hsu-server.store
