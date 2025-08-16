@@ -1,32 +1,91 @@
-version: '3.8'
+version: "3.8"
 
 services:
   db:
     image: mysql:8.0
-    container_name: my-mysql
-    restart: always
+    container_name: mysql
+    command: [
+      "--default-authentication-plugin=mysql_native_password",
+      "--character-set-server=utf8mb4",
+      "--collation-server=utf8mb4_unicode_ci"
+    ]
     environment:
-      MYSQL_ROOT_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
-      MYSQL_DATABASE: mydb
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
-      - "3306:3306"
+      - "3307:3306"           # 호스트 3307 -> 컨테이너 3306
     volumes:
       - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
 
   app:
-    image: ggamnunq/umc:backend
-    container_name: spring-app
-    restart: always
+    image: yujin1219/umc-backend:dev  # Docker Hub 이미지 사용
+    container_name: umc-app
+    restart: always                   # 재시작 정책 추가
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+    env_file:
+      - .env
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/mydb
-      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
-      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
-      AWS_ACCESS_KEY: ${AWS_ACCESS_KEY}
-      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      SPRING_PROFILES_ACTIVE: dev
+
+      # DB 연결
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/${MYSQL_DATABASE}?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+      SPRING_DATASOURCE_USERNAME: ${MYSQL_USER}
+      SPRING_DATASOURCE_PASSWORD: ${MYSQL_PASSWORD}
+
+      # SwaggerConfig에서 사용하는 값
+      API_SERVER_URL: ${API_SERVER_URL}
+
+      # S3 - 빈 주입 실패 막기 위해 더미 값 넣어둠
+      CLOUD_AWS_CREDENTIALS_ACCESSKEY: ${CLOUD_AWS_CREDENTIALS_ACCESSKEY}
+      CLOUD_AWS_CREDENTIALS_SECRETKEY: ${CLOUD_AWS_CREDENTIALS_SECRETKEY}
+      CLOUD_AWS_REGION_STATIC: ${CLOUD_AWS_REGION_STATIC}
+      CLOUD_AWS_S3_BUCKET: ${CLOUD_AWS_S3_BUCKET}
+      CLOUD_AWS_S3_PATH_PHOTO: ${CLOUD_AWS_S3_PATH_PHOTO}
+
     ports:
       - "8080:8080"
 
 volumes:
   db_data:
+
+#version: '3.8'
+#
+#services:
+#  db:
+#    image: mysql:8.0
+#    container_name: mysql8
+#    restart: always
+#    environment:
+#      MYSQL_ROOT_PASSWORD: UmcServerData1234!
+#      MYSQL_DATABASE: mydb
+#    ports:
+#      - "3307:3306"
+#    volumes:
+#      - db_data:/var/lib/mysql
+#
+#  app:
+#    image: yujin1219/umc:backend
+#    container_name: spring-app
+#    restart: always
+#    depends_on:
+#      - db
+#    environment:
+#      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/mydb
+#      SPRING_DATASOURCE_USERNAME: root
+#      SPRING_DATASOURCE_PASSWORD: UmcServerData1234!
+#      AWS_ACCESS_KEY: ${AWS_ACCESS_KEY}
+#      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+#    ports:
+#      - "8080:8080"
+#
+#volumes:
+#  db_data:
