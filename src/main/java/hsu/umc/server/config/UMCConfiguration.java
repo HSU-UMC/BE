@@ -10,7 +10,7 @@ public class UMCConfiguration implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins("http://localhost:5173","https://hansung-umc.netlify.app","https://hsuumc.site", "https://www.hsuumc.site", "https://hsu-server.store")
-                .allowedMethods("GET", "POST", "PATCH", "DELETE", "PUT")
+                .allowedMethods("GET", "POST", "PATCH", "DELETE", "PUT", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true);
     }
